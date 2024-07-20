@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Wallpaper</string>
+    <string name="category">Category</string>
+    <string name="apply">Apply</string>
+    <string name="reset">Reset</string>
+    <string name="filters">Filters</string>
+    <string name="order">Order</string>
+    <string name="orientation">Orientation</string>
+    <string name="type">Type</string>
+    <string name="color">Color</string>
 </resources>

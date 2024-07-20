@@ -27,10 +27,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.kenley.wallpaper.ui.theme.PictureListScreen
+import com.kenley.wallpaper.ui.theme.view.category.PictureListScreen
 import com.kenley.wallpaper.ui.theme.WallpaperTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
