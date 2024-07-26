@@ -39,7 +39,7 @@ fun FilteredHorizontalView(items: List<FilteredItem>, selectedItem: String, onCl
                 if (item.type != FilteredType.Color) {
                     Row {
                         Text(
-                            text = item.name, color = Color.Black
+                                    text = item.name, color = Color.Black
                             , modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 8.dp))
                         Icon(
                             imageVector = Icons.Default.Clear,

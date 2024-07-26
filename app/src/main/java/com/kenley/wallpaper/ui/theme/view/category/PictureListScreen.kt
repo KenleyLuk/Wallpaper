@@ -1,5 +1,6 @@
 package com.kenley.wallpaper.ui.theme.view.category
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -59,6 +60,7 @@ import com.kenley.wallpaper.ui.theme.component.CustomSearchView
 import com.kenley.wallpaper.ui.theme.component.FilteredHorizontalView
 import com.kenley.wallpaper.ui.theme.component.GridView
 import com.kenley.wallpaper.ui.theme.component.HorizontalListView
+import com.kenley.wallpaper.ui.theme.component.ImagePopup
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -364,6 +366,8 @@ fun HorizontalRecyclerView(items: List<String>, selectedItem: String, onItemClic
 
 @Composable
 fun StaggeredGridRecyclerView(photos: List<ImageData>) {
+    var selectedImage: String? by remember { mutableStateOf(null) }
+
     LazyVerticalStaggeredGrid(
         columns = StaggeredGridCells.Fixed(2),
         verticalItemSpacing = 10.dp,
@@ -373,7 +377,10 @@ fun StaggeredGridRecyclerView(photos: List<ImageData>) {
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(20.dp))
-                        .background(Color.White)) {
+                        .background(Color.White)
+                        .clickable {
+                            selectedImage = photos[photo].webformatURL
+                        }) {
                     AsyncImage(
                         model = photos[photo].webformatURL,
                         contentDescription = null,
@@ -383,4 +390,8 @@ fun StaggeredGridRecyclerView(photos: List<ImageData>) {
             }
         },
         modifier = Modifier.fillMaxSize())
+
+    if (selectedImage != null) {
+        ImagePopup(selectedImage!!, onDismiss = { selectedImage = null })
+    }
 }
