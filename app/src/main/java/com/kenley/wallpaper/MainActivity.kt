@@ -29,6 +29,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.kenley.wallpaper.ui.theme.view.category.PictureListScreen
 import com.kenley.wallpaper.ui.theme.WallpaperTheme
+import com.kenley.wallpaper.ui.theme.view.category.PictureDetailScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,7 +49,10 @@ class MainActivity : ComponentActivity() {
                             navController)
                     } // home destination
                     composable(route = Screens.PictureListScreen.route) {
-                        PictureListScreen()
+                        PictureListScreen(navController)
+                    }
+                    composable(route = Screens.PictureDetailScreen.route) {
+                        PictureDetailScreen(navController)
                     }
                 }
             }

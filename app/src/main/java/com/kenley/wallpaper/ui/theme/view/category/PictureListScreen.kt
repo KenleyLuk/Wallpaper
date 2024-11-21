@@ -1,5 +1,6 @@
 package com.kenley.wallpaper.ui.theme.view.category
 
+import android.app.Activity
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -46,11 +47,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.kenley.wallpaper.R
+import com.kenley.wallpaper.Screens
 import com.kenley.wallpaper.apiData.ImageData
 import com.kenley.wallpaper.ui.theme.view.category.viewmodel.PictureListViewModel
 import com.kenley.wallpaper.model.ColorPalette
@@ -65,7 +69,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PictureListScreen(viewModel: PictureListViewModel = hiltViewModel()) {
+fun PictureListScreen(navController: NavHostController, viewModel: PictureListViewModel = hiltViewModel()) {
     val tags = listOf(
         "backgrounds",
         "fashion",
@@ -134,7 +138,8 @@ fun PictureListScreen(viewModel: PictureListViewModel = hiltViewModel()) {
                     modifier = Modifier.padding(start = 20.dp))
 
                 IconButton(modifier = Modifier.padding(end = 20.dp), onClick = {
-                    showBottomSheet = true
+                    showBottomSheet = false
+                    navController.navigate(Screens.PictureDetailScreen.route)
                 }) {
                     Icon(
                         imageVector = Icons.Default.Menu,
@@ -286,9 +291,10 @@ fun PictureListScreen(viewModel: PictureListViewModel = hiltViewModel()) {
                                        .height(50.dp),
                                    onClick = {
                                        scope.launch {
-                                           selectedOrderStr = orderTags.first()
-                                           selectedOrientationStr = orientationTags.first()
-                                           selectedTypeStr = typeTags.first()
+                                           selectedOrderStr = ""
+                                           selectedOrientationStr = ""
+                                           selectedTypeStr = ""
+                                           selectedColorStr = ""
                                        }.invokeOnCompletion {}
                                    }) {
                                 Text(stringResource(id = R.string.reset), color = Color.Black)
@@ -326,7 +332,7 @@ fun PictureListScreen(viewModel: PictureListViewModel = hiltViewModel()) {
             Box(
                 modifier = Modifier.padding(
                     start = 20.dp, top = 20.dp, bottom = 10.dp, end = 20.dp)) {
-                StaggeredGridRecyclerView(photos = result ?: emptyList())
+                StaggeredGridRecyclerView(navController, photos = result ?: emptyList())
             }
         }
     }
@@ -365,7 +371,7 @@ fun HorizontalRecyclerView(items: List<String>, selectedItem: String, onItemClic
 }
 
 @Composable
-fun StaggeredGridRecyclerView(photos: List<ImageData>) {
+fun StaggeredGridRecyclerView(navController: NavHostController, photos: List<ImageData>) {
     var selectedImage: String? by remember { mutableStateOf(null) }
 
     LazyVerticalStaggeredGrid(
@@ -379,7 +385,8 @@ fun StaggeredGridRecyclerView(photos: List<ImageData>) {
                         .clip(RoundedCornerShape(20.dp))
                         .background(Color.White)
                         .clickable {
-                            selectedImage = photos[photo].webformatURL
+//                            selectedImage = photos[photo].webformatURL
+                            navController.navigate(Screens.PictureDetailScreen.route)
                         }) {
                     AsyncImage(
                         model = photos[photo].webformatURL,
@@ -392,6 +399,7 @@ fun StaggeredGridRecyclerView(photos: List<ImageData>) {
         modifier = Modifier.fillMaxSize())
 
     if (selectedImage != null) {
+        Log.d("selectedImage2","${selectedImage}")
         ImagePopup(selectedImage!!, onDismiss = { selectedImage = null })
     }
 }
