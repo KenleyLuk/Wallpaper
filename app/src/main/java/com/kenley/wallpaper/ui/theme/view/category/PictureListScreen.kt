@@ -138,8 +138,8 @@ fun PictureListScreen(navController: NavHostController, viewModel: PictureListVi
                     modifier = Modifier.padding(start = 20.dp))
 
                 IconButton(modifier = Modifier.padding(end = 20.dp), onClick = {
-                    showBottomSheet = false
-                    navController.navigate(Screens.PictureDetailScreen.route)
+                    showBottomSheet = true
+//                    navController.navigate(Screens.PictureDetailScreen.route)
                 }) {
                     Icon(
                         imageVector = Icons.Default.Menu,
@@ -385,8 +385,8 @@ fun StaggeredGridRecyclerView(navController: NavHostController, photos: List<Ima
                         .clip(RoundedCornerShape(20.dp))
                         .background(Color.White)
                         .clickable {
-//                            selectedImage = photos[photo].webformatURL
-                            navController.navigate(Screens.PictureDetailScreen.route)
+                            selectedImage = photos[photo].webformatURL
+//                            navController.navigate(Screens.PictureDetailScreen.route)
                         }) {
                     AsyncImage(
                         model = photos[photo].webformatURL,
